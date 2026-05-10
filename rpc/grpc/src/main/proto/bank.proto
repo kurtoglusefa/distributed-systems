@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package it.polito.dsp.bank;
+
+service BankOperations {
+    rpc addDeposit (AddDepositRequest) returns (AddDepositResponse);
+    rpc addWithdrawal (AddWithdrawalRequest) returns (AddWithdrawalResponse);
+}
+
+enum ExitStatus {
+    OK = 0;
+    UNKNOWN_ACCOUNT_ID = 1;
+    NO_AVAILABILITY = 2;
+    BAD_AMOUNT = 3;
+}  
+
+message AddDepositRequest {
+    string id  = 1;
+    float amount = 2;
+    string description = 3;
+}
+
+message AddDepositResponse {
+    ExitStatus status = 1; 
+}
+
+message AddWithdrawalRequest {
+    string id  = 1;
+    float amount = 2;
+    string description = 3;
+    bool reducible = 4;
+}
+
+message AddWithdrawalResponse {
+    ExitStatus status = 1;
+    float withdrawn = 2;
+}
+
